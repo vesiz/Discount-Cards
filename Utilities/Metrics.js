@@ -1,5 +1,6 @@
 //may be eventually deleted
 const DISCOUNT_TYPE = {
+    0: "",
     1: "Cosmetics",
     2: "Books",
     3: "Accessories",
@@ -7,6 +8,7 @@ const DISCOUNT_TYPE = {
 };
 
 const DISCOUNT_PERCENTAGE = {
+    "00": "",
     "05": "5%",
     "10": "10%",
     "20": "20%",
@@ -27,6 +29,10 @@ const ORDER_BY_ORDER = {
 const BUTTONS_VISIBILITY = {
     create: "create",
     update: "update"
+};
+
+const FIELDS = {
+
 };
 
 /*

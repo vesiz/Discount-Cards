@@ -72,7 +72,6 @@ const DiscountCardsHandler = {
         }
 
         LocalStorage.setCards(Cards);
-
     },
 
     deleteCard(_id) {

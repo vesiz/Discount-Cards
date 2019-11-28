@@ -6,6 +6,8 @@ const cardSubmitBtn = document.getElementById("card-submit");
 const cardResetBtn = document.getElementById("card-reset");
 const cardUpdateBtn = document.getElementById("card-update");
 
+//const searchBtn = document.getElementById("search-button");
+
 const CustomerUIManager = {
     createCustomer() {
         let name = (document.getElementById("name")).value;
@@ -157,15 +159,9 @@ const DiscountCardUIManager = {
             selectCustomer.appendChild(option);
         }
 
-        let currentDate = new Date();
-        let datepicker = document.getElementById("date");
-        datepicker.min = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-        datepicker.max = "2099-12-31";
-        datepicker.value = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-
+        MiscUIManager.setFilterDateRange("date");
         //(document.getElementById("accumulation")).removeAttribute("checked");
         (document.getElementById("accumulation")).checked = false;
-
     },
 
     createDiscountCard() {
@@ -345,7 +341,155 @@ const MiscUIManager = {
             document.getElementById(`${_type}-reset`).style.display = "none";
             document.getElementById(`${_type}-update`).style.display = "inline";
         }
+    },
+
+    setFilterDateRange(_datepicker) {
+        let currentDate = new Date();
+        let datepicker = document.getElementById(_datepicker);
+        datepicker.min = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+        datepicker.max = "2099-12-31";
+        datepicker.value = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
     }
+};
+
+const FilterUIManager = {
+    getFilterSettings() {
+        CURRENT_FILTER_SETTINGS.searchInput = document.querySelector("#search-input > input").value;
+
+        var searchRadios = document.getElementsByName("search");
+        for (let radio of searchRadios) {
+            if (radio.checked) CURRENT_FILTER_SETTINGS.searchByConstraint = radio.value;
+        }
+
+        CURRENT_FILTER_SETTINGS.orderByConstraint = document.getElementById("order-by-options").value;
+        CURRENT_FILTER_SETTINGS.orderByOrder = (document.getElementsByName("order-by")[1]).checked ? ORDER_BY_ORDER.desc : ORDER_BY_ORDER.asc;
+        CURRENT_FILTER_SETTINGS.discountType = document.getElementById("filter-category").value;
+        CURRENT_FILTER_SETTINGS.discountPercentage = document.getElementById("filter-discount").value;
+        CURRENT_FILTER_SETTINGS.expirationDate = document.getElementById("filter-date").value;
+
+        SessionStorage.setCurrentFilterSettings(CURRENT_FILTER_SETTINGS);
+    },
+
+    filter() {
+        let Cards = DiscountCardsHandler.getAllDiscountCards();
+        let Customers = CustomersHandler.getAllCustomers();
+        this.getFilterSettings();
+
+        Cards = this.filterByDiscountCategory(Cards);
+        Cards = this.filterByDiscountPercent(Cards);
+        Cards = this.filterByExpirationDate(Cards);
+
+        //sorting mechanism 
+        switch (CURRENT_FILTER_SETTINGS.orderByConstraint) {
+            case ORDER_SEARCH_OPTIONS.name:
+                Cards.sort((a, b) => {
+                    let nameA = (Customers.find(element => element.email == a.customerEmail)).name;
+                    let nameB = (Customers.find(element => element.email == b.customerEmail)).name;
+
+                    return this.sortCards(nameA, nameB);
+                });
+                break;
+            case ORDER_SEARCH_OPTIONS.city:
+                Cards.sort((a, b) => {
+                    let cityA = (Customers.find(element => element.email == a.customerEmail)).city;
+                    let cityB = (Customers.find(element => element.email == b.customerEmail)).city;
+
+                    return this.sortCards(cityA, cityB);
+                });
+                break;
+            case ORDER_SEARCH_OPTIONS.card_number:
+                Cards.sort((a, b) => {
+                    return this.sortCards(a.cardCode, b.cardCode);
+                });
+                break;
+        }
+
+        console.log(CURRENT_FILTER_SETTINGS);
+        console.log(Cards);
+        DiscountCardUIManager.displayCards(Cards);
+    },
+
+    sortCards(_a, _b) {
+        if (CURRENT_FILTER_SETTINGS.orderByOrder == ORDER_BY_ORDER.asc) {
+            if (_a < _b) return -1;
+            if (_a > _b) return 1;
+            else return 0;
+        } else if (CURRENT_FILTER_SETTINGS.orderByOrder == ORDER_BY_ORDER.desc) {
+            if (_a > _b) return -1;
+            if (_a < _b) return 1;
+            else return 0;
+        }
+    },
+
+    filterByDiscountCategory(_cards){
+        let filteredCards = [];
+        for (let card of _cards) {
+
+            let currentCardType = card.codeInfo.category;
+            let currentChosenType = document.getElementById("filter-category").value;
+
+            if (currentChosenType == currentCardType) {
+                filteredCards.push(card);
+            }
+        }
+
+        if(CURRENT_FILTER_SETTINGS.discountType == null || CURRENT_FILTER_SETTINGS.discountType == ""){
+            return _cards;
+        }
+
+        return filteredCards;
+    },
+
+    filterByDiscountPercent(_cards){
+        let filteredCards = [];
+
+        for(let card of _cards){
+            let currentCardDiscount = parseInt(card.codeInfo.discount.substring(0, card.codeInfo.discount.length - 1));
+            let currentChosenDiscount = parseInt(CURRENT_FILTER_SETTINGS.discountPercentage);
+
+            if(currentCardDiscount == currentChosenDiscount){
+                filteredCards.push(card);
+            }
+        }
+
+        if(CURRENT_FILTER_SETTINGS.discountPercentage == null || CURRENT_FILTER_SETTINGS.discountPercentage == ""){
+            return _cards;
+        }
+
+        return filteredCards;
+    },
+
+    filterByExpirationDate(_cards) {
+
+        if((new Date(document.getElementById("filter-date").value)) < (new Date())){
+            alert("you cannot filter through past dates duh");
+            return _cards;
+        }
+        
+        let filteredCards = [];
+
+        for(let card of _cards){
+            let currentExpirationDate = new Date(card.codeInfo.date);
+            let currentChosenExpirationDate = new Date(CURRENT_FILTER_SETTINGS.expirationDate);
+
+            if(currentExpirationDate < currentChosenExpirationDate){
+                filteredCards.push(card);
+            }
+        }
+
+        if(CURRENT_FILTER_SETTINGS.expirationDate == null || CURRENT_FILTER_SETTINGS.expirationDate == ""){
+            return _cards;
+        }
+
+        return filteredCards;
+    }
+
+
+    /*
+    reset filter preferences 
+
+    */
+
 };
 
 
@@ -353,6 +497,7 @@ window.onload = () => {
     CustomerUIManager.displayAllCustomers();
     DiscountCardUIManager.prepareForm();
     DiscountCardUIManager.displayAllCards();
+    //MiscUIManager.setFilterDateRange("filter-date");
 };
 
 customerSubmitBtn.addEventListener("click", (e) => {

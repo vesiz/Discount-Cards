@@ -10,6 +10,7 @@
   <script src="Utilities/CodeGenerator.js" defer></script>
   <script src="Utilities/LocalStorage.js" defer></script>
   <script src="Utilities/CurrentFilterSettings.js" defer></script>
+  <script src="Utilities/SessionStorage.js" defer></script>
   <script src="Entities/CodeInfo.js" defer></script>
   <script src="Entities/Customer.js" defer></script>
   <script src="Entities/DiscountCard.js" defer></script>
@@ -126,54 +127,59 @@
     <div id="card-info">
       <h2>View All Discount Cards</h2>
       <div id="filter-fields">
-        <div id="search">
-          <div id="search-radio">
-            <input type="radio" name="search"> Name
-            <input type="radio" name="search"> City
-            <input type="radio" name="search"> Card Number
+        <div id="search" class="row">
+          <div id="search-radio" class="subrow">
+            <input type="radio" name="search" value="Name" onchange="FilterUIManager.filter()"> Name
+            <input type="radio" name="search" value="City" onchange="FilterUIManager.filter()"> City
+            <input type="radio" name="search" value="Card Number" onchange="FilterUIManager.filter()"> Card Number
           </div>
-          <div id="search-input">
-            <input type="text" name="search">
-            <input type="button" value="Search">
+          <div id="search-input" class="subrow" >
+            <input type="text" name="search" oninput="FilterUIManager.filter()">
+            <!-- <input id="search-button" type="button" value="Search"> -->
           </div>
         </div>
-        <div id="order">
+        <div id="order" class="row">
           <p>Order By</p>
-          <div id="order-by-radio">
-            <input type="radio" name="order-by">Ascending
-            <input type="radio" name="order-by">Descending
+          <div id="order-by-radio" class="subrow">
+            <input type="radio" name="order-by" onchange="FilterUIManager.filter()">Ascending
+            <input type="radio" name="order-by" onchange="FilterUIManager.filter()">Descending
           </div>
-          <select>
+          <select id="order-by-options" class="subrow" onchange="FilterUIManager.filter()">
+            <option value="" selected disabled hidden></option>
             <option>Name</option>
             <option>City</option>
             <option>Card Number</option>
           </select>
         </div>
-        <div id="filter">
+        <div id="filter" class="row">
           <p>Filter By</p>
-          <div>
+          <div class="subrow">
             <label>Discount Type</label>
-            <select id="category" required>
-              <option value="1">Cosmetics</option>
-              <option value="2">Books</option>
-              <option value="3">Accessories</option>
-              <option value="4">Services</option>
+            <select id="filter-category" onchange="FilterUIManager.filter()">
+              <option value="" selected disabled hidden></option>
+              <option value="Cosmetics">Cosmetics</option>
+              <option value="Books">Books</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Services">Services</option>
             </select>
           </div>
-          <div>
+          <div class="subrow">
             <label>Discount Percentage</label>
-            <select>
+            <select id="filter-discount" onchange="FilterUIManager.filter()">
+              <option value="" selected disabled hidden></option>
               <option value="05">5%</option>
               <option value="10">10%</option>
               <option value="20">20%</option>
               <option value="30">30%</option>
             </select>
           </div>
-          <div>
+          <div class="subrow">
             <label>Expiration Date</label>
-            <input type="date">
+            <input type="date" id="filter-date" onchange="FilterUIManager.filter()">
           </div>
-
+        </div>
+        <div class="row">
+          <input type="button" id="filter-reset" value="Reset Filter Preferences">
         </div>
       </div>
       <div id="cards-list"></div>

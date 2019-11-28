@@ -2,7 +2,7 @@ const CARD_ID = "idCounter";
 const CUSTOMERS_KEY = "customers";
 const CARDS_KEY = "discountCards";
 
-var LocalStorage = {
+const LocalStorage = {
 
     // gets an array of objects and parses them to json format 
     setCustomers(_customersArray){
