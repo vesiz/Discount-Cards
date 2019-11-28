@@ -1,0 +1,31 @@
+Overview
+Create an application for managing discount cards for customers.
+
+Details
+The following information about card is stored: customer full name, customer city, card code. The card code consists of 10 digits. First one defines category (1 – cosmetics, 2 – books, 3 – accessories, 4 – services). Second one defines accumulation (0 – without accumulation, 1 – with accumulation). Third and fourth digits define discount percentage (5, 10, 20 or 30). Digits from 5th to 10th define the expiration date.
+
+Example:4
+3020140519
+3 – accessories
+0 – no accumulation
+20 – 20% discount
+140519 – expiration date is May 14th, 2019.
+
+Assignment
+Create an application for managing discount cards. The application should have options for reading, creating, updating, deleting data for discount cards.
+Data should be displayed in a table with options for:
+searching by name, city and card number;
+ordering (ascending or descending) by name, city or card number;
+ filtering by discount type, discount percentage and expiration date.
+Options for create and edit must be provided via a form with fields for name, city and additional fields for card number parts.
+Deletion is executed after a positive answer from confirmation prompt.
+All information is stored in the localstorage.
+
+Technology Stack
+HTML
+CSS
+JavaScript
+
+Enhancements
+Add customers management in the application. The following information for a customer is stored: full name, email and cards associated with them. The maximum number of active cards that a customer can have is 4 – one for each product category.
+If a card expired, there must be an option for renewal. When a card is renewed a new one is created with the same options and expiration period 1 year from the moment of renewal.

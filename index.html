@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Discount Cards</title>
+  <script src="Utilities/Metrics.js" defer></script>
+  <script src="Utilities/CodeGenerator.js" defer></script>
+  <script src="Utilities/LocalStorage.js" defer></script>
+  <script src="Utilities/CurrentFilterSettings.js" defer></script>
+  <script src="Entities/CodeInfo.js" defer></script>
+  <script src="Entities/Customer.js" defer></script>
+  <script src="Entities/DiscountCard.js" defer></script>
+  <script src="Handlers/CustomersHandler.js" defer></script>
+  <script src="Handlers/DiscountCardsHandler.js" defer></script>
+  <script src="Scripts/script.js" defer></script>
+</head>
+
+<body>
+  <div id="customers-view">
+    <div id="customer-form">
+      <h2>Create Customer</h2>
+      <form>
+        <div class="row">
+          <div class="subrow">
+            <label for="name">Name</label>
+          </div>
+          <div class="subrow">
+            <input type="text" id="name" required>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="email">Email</label>
+          </div>
+          <div class="subrow">
+            <input type="text" id="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="city">City</label>
+          </div>
+          <div class="subrow">
+            <input type="text" id="city" required>
+          </div>
+        </div>
+        <div class="row">
+          <input id="customer-submit" type="submit" value="Submit">
+          <input id="customer-reset" type="reset" value="Reset">
+          <input id="customer-update" type="button" value="Update" style="display: none;">
+        </div>
+      </form>
+    </div>
+    <div id="customers-info">
+      <h2>View All Customers</h2>
+      <div id="customers-list"></div>
+    </div>
+  </div>
+
+  <div id="cards-view">
+    <div id="card-form">
+      <h2>Create a Discount Card</h2>
+      <form>
+        <div class="row">
+          <div class="subrow">
+            <label for="customer">Customer</label>
+          </div>
+          <div class="subrow">
+            <select id="customer" required>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="category">Category</label>
+          </div>
+          <div class="subrow">
+            <select id="category" required>
+              <option value="1">Cosmetics</option>
+              <option value="2">Books</option>
+              <option value="3">Accessories</option>
+              <option value="4">Services</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="accumulation">Accumulation</label>
+          </div>
+          <div class="subrow">
+            <input type="checkbox" id="accumulation">
+          </div>
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="discount">Discount</label>
+          </div>
+          <div class="subrow">
+            <select id="discount" required>
+              <option value="05">5%</option>
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+              <option value="30">30%</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="subrow">
+            <label for="expiration-date">Expiration Date</label>
+          </div>
+          <div class="subrow">
+            <input type="date" id="date" required>
+          </div>
+        </div>
+        <div class="row">
+          <input id="card-submit" type="submit" value="Submit">
+          <input id="card-reset" type="reset" value="Reset">
+          <input id="card-update" type="button" value="Update" style="display: none;">
+        </div>
+      </form>
+    </div>
+    <div id="card-info">
+      <h2>View All Discount Cards</h2>
+      <div id="filter-fields">
+        <div id="search">
+          <div id="search-radio">
+            <input type="radio" name="search"> Name
+            <input type="radio" name="search"> City
+            <input type="radio" name="search"> Card Number
+          </div>
+          <div id="search-input">
+            <input type="text" name="search">
+            <input type="button" value="Search">
+          </div>
+        </div>
+        <div id="order">
+          <p>Order By</p>
+          <div id="order-by-radio">
+            <input type="radio" name="order-by">Ascending
+            <input type="radio" name="order-by">Descending
+          </div>
+          <select>
+            <option>Name</option>
+            <option>City</option>
+            <option>Card Number</option>
+          </select>
+        </div>
+        <div id="filter">
+          <p>Filter By</p>
+          <div>
+            <label>Discount Type</label>
+            <select id="category" required>
+              <option value="1">Cosmetics</option>
+              <option value="2">Books</option>
+              <option value="3">Accessories</option>
+              <option value="4">Services</option>
+            </select>
+          </div>
+          <div>
+            <label>Discount Percentage</label>
+            <select>
+              <option value="05">5%</option>
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+              <option value="30">30%</option>
+            </select>
+          </div>
+          <div>
+            <label>Expiration Date</label>
+            <input type="date">
+          </div>
+
+        </div>
+      </div>
+      <div id="cards-list"></div>
+    </div>
+  </div>
+
+</body>
+
+</html>
