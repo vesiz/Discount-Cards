@@ -35,7 +35,6 @@ const CustomerUIManager = {
 
             let infoString = `<h4>${customer.name}</h4><span> Email address: ${customer.email} | City: ${customer.city} | Discount Cards:</span><ul>`;
             for (let card of customer.discountCards) {
-                console.log(DiscountCardsHandler.getCard(card));
                 infoString += `<li>${DiscountCardsHandler.getCardInfo(card)}</li>`;
             }
 

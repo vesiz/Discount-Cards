@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#info-message {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    background-color: #EDE2DF;
+    /* display: none; */
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 300ms linear;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+}

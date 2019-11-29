@@ -30,6 +30,10 @@ const BUTTONS_VISIBILITY = {
     update: "update"
 };
 
+const VIEW_MODE = {
+    customers: "customers",
+    cards: "cards"
+};
 
 //MIN AND MAX VALUES FOR DATE
 //VALUES FOR ID AND CLASS NAMES FOR DIVS

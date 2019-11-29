@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Discount Cards</title>
+
+  <link rel="stylesheet" type="text/css" href="Styles/style.css">
+  <link rel="stylesheet" type="text/css" href="Styles/customers.css">
+  <link rel="stylesheet" type="text/css" href="Styles/style.css">
+
   <script src="Utilities/DTOs.js"></script>
   <script src="Utilities/Metrics.js" defer></script>
   <script src="Utilities/CodeGenerator.js" defer></script>
@@ -24,6 +29,10 @@
 </head>
 
 <body>
+  <div>
+    <button id="manage-customers" onclick="MiscUIManager.setView(VIEW_MODE.customers)">Manage Customers</button>
+    <button id="manage-cards" onclick="MiscUIManager.setView(VIEW_MODE.cards)">Manage Cards</button>
+  </div>
   <div id="customers-view">
     <div id="customer-form">
       <h2>Create Customer</h2>
@@ -191,7 +200,9 @@
       <div id="cards-list"></div>
     </div>
   </div>
-
+  <div id="info-message" class="hidden">
+    <p>some message</p>
+  </div>
 </body>
 
 </html>
