@@ -1,4 +1,4 @@
-const DiscountCardsHandler = {
+const DiscountCardsHandler = { // handles discount cards creation/manipulation/deletion logic
     createDiscountCard(_cardDto) {
         let DiscountCards = LocalStorage.getCards();
         let discountCard = new DiscountCard(_cardDto.customer, _cardDto.cardCode);

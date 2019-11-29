@@ -1,4 +1,4 @@
-const CustomersHandler = { // handles customer background/backend logic
+const CustomersHandler = { // handles customer data creation/manipulation/deletion logic
     createCustomer(_customerDto) {
         let Customers = LocalStorage.getCustomers();
 
