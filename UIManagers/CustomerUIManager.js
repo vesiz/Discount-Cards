@@ -13,16 +13,10 @@ const CustomerUIManager = {
             return;
         }
 
-        let customerDto = {
-            name,
-            email,
-            city
-        };
-
-        if (!CustomersHandler.createCustomer(customerDto)) {
+        if (!CustomersHandler.createCustomer(new CustomerDto(name, email, city))) {
             alert("A customer with this email already exists. Please provide another email address.");
         } else {
-            alert("Customer successfully created.");
+            //alert("Customer successfully created.");
             this.resetForm();
         }
 
@@ -41,7 +35,8 @@ const CustomerUIManager = {
 
             let infoString = `<h4>${customer.name}</h4><span> Email address: ${customer.email} | City: ${customer.city} | Discount Cards:</span><ul>`;
             for (let card of customer.discountCards) {
-                infoString += `<li>${card}</li>`;
+                console.log(DiscountCardsHandler.getCard(card));
+                infoString += `<li>${DiscountCardsHandler.getCardInfo(card)}</li>`;
             }
 
             infoString += `</ul>`;
@@ -108,13 +103,12 @@ const CustomerUIManager = {
     },
 
     updateCustomer(_email) {
-        let customerDto = {
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            city: document.getElementById("city").value
-        };
 
-        if (!CustomersHandler.updateCustomer(customerDto, _email)) {
+        let name = document.getElementById("name").value;
+        let email =  document.getElementById("email").value;
+        let city = document.getElementById("city").value;
+
+        if (!CustomersHandler.updateCustomer(new CustomerDto(name, email, city), _email)) {
             alert("You cannot give this user an email that is already assigned to another user. Please enter another email.");
             return;
         }
@@ -147,4 +141,8 @@ customerSubmitBtn.addEventListener("click", (e) => {
 customerUpdateBtn.addEventListener("click", (e) => {
     e.preventDefault();
     CustomerUIManager.updateCustomer(customerUpdateBtn.name);
+});
+
+customerResetBtn.addEventListener("click", () => {
+    MiscUIManager.toggleEntityButtonVisibility("customer", BUTTONS_VISIBILITY.create);
 });

@@ -17,7 +17,6 @@ const DiscountCardUIManager = {
         }
 
         MiscUIManager.setFilterDateRange("date");
-        //(document.getElementById("accumulation")).removeAttribute("checked");
         (document.getElementById("accumulation")).checked = false;
     },
 
@@ -35,12 +34,7 @@ const DiscountCardUIManager = {
 
         let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
 
-        let cardDto = {
-            customer,
-            cardCode
-        };
-
-        if (!DiscountCardsHandler.createDiscountCard(cardDto)) {
+        if (!DiscountCardsHandler.createDiscountCard(new CardDto(customer, cardCode))) {
             alert("This customer has the maximum number of discount cards and therefore cannot have a new one. Card not created.");
         }
 
@@ -69,7 +63,7 @@ const DiscountCardUIManager = {
 
         for (let card of _cardsArray) {
             let customer = CustomersHandler.getCustomer(card.customerEmail);
-
+            //console.log(card.customerEmail);
             let currentContainer = document.createElement("div");
             currentContainer.setAttribute("class", "card-wrapper");
 
@@ -146,12 +140,7 @@ const DiscountCardUIManager = {
 
         let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
 
-        let cardDto = {
-            customer,
-            cardCode
-        };
-
-        DiscountCardsHandler.updateCard(cardDto, _id);
+        DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id);
         this.resetForm();
         this.displayAllCards();
         CustomerUIManager.displayAllCustomers();
@@ -175,13 +164,36 @@ const DiscountCardUIManager = {
             return;
         }
 
-        let cardDto = {
-            customer: card.customerEmail,
-            cardCode: newCode
-        };
-
-        DiscountCardsHandler.updateCard(cardDto, _id);
+        DiscountCardsHandler.updateCard(new CardDto(card.customerEmail, newCode), _id);
         this.displayAllCards();
+    },
+
+    //if you want to test it first create an expired card with the command below from the browser console
+    //DiscountCardsHandler.createDiscountCard({customer: "replace this with an existing customer", cardCode: "3020140519"});
+    renewCards() {
+        let Cards = DiscountCardsHandler.getAllDiscountCards();
+        let warningDate = new Date();
+        warningDate = warningDate.setDate(warningDate.getDate() + 10);
+
+        for (let card of Cards) {
+            if ((new Date(card.codeInfo.date)) < (new Date())) {
+                if (confirm(`Card ${card.id} is expired. If you do not renew it it's going to be deleted. Would you like to renew it?`)) {
+                    DiscountCardsHandler.renewCard(card.id);
+                } else {
+                    DiscountCardsHandler.deleteCard(card.id);
+                }
+
+                DiscountCardUIManager.displayAllCards();
+                CustomerUIManager.displayAllCustomers();
+            } else if (warningDate > (new Date(card.codeInfo.date))) {
+                if (confirm(`Card ${card.id} is about to expire soon. Would you like to renew it now?`)) {
+                    DiscountCardsHandler.renewCard(card.id);
+
+                    DiscountCardUIManager.displayAllCards();
+                    CustomerUIManager.displayAllCustomers();
+                }
+            }
+        }
     }
 
 };
@@ -194,4 +206,8 @@ cardSubmitBtn.addEventListener("click", (e) => {
 cardUpdateBtn.addEventListener("click", (e) => {
     e.preventDefault();
     DiscountCardUIManager.updateCard(cardUpdateBtn.name);
+});
+
+cardResetBtn.addEventListener("click", () => {
+    MiscUIManager.toggleEntityButtonVisibility("card", BUTTONS_VISIBILITY.create);
 });

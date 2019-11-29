@@ -16,12 +16,7 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
 
     getCustomer(_email) {
         let Customers = LocalStorage.getCustomers();
-
-        for (const customer of Customers) {
-            if (customer.email == _email) {
-                return customer;
-            }
-        }
+        return Customers.find(item => item.email == _email);
     },
 
     getAllCustomers() {
@@ -32,15 +27,12 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
 
     deleteCustomer(_email) {
         let Customers = LocalStorage.getCustomers();
+        let customer = Customers.find(item => item.email == _email);
 
-        for (const customer of Customers) {
-            if (customer.email == _email) {
-                Customers.splice(Customers.indexOf(customer), 1);
-                for (let card of customer.discountCards) {
-                    DiscountCardsHandler.deleteCard(card);
-                }
-                break;
-            }
+        Customers.splice(Customers.indexOf(customer), 1);
+
+        for (let card of customer.discountCards) {
+            DiscountCardsHandler.deleteCard(card);
         }
 
         LocalStorage.setCustomers(Customers);
@@ -48,13 +40,7 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
 
     updateCustomer(_customerDto, _email) {
         let Customers = LocalStorage.getCustomers();
-        let currentCustomer;
-
-        for (const item of Customers) {
-            if (item.email == _email) {
-                currentCustomer = item;
-            }
-        }
+        let currentCustomer =  Customers.find(item => item.email == _email);
 
         //cannot assign new email to user when there's already another user with the same email 
         for (const customer of Customers) {
@@ -114,5 +100,4 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
 
         return true;
     }
-
 };

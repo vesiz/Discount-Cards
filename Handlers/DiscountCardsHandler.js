@@ -23,25 +23,12 @@ const DiscountCardsHandler = { // handles discount cards creation/manipulation/d
 
     getCard(_id) {
         let Cards = LocalStorage.getCards();
-
-        for (const card of Cards) {
-            if (card.id == _id) {
-                return card;
-            }
-        }
-
+        return Cards.find((element) => element.id == _id);
     },
 
     updateCard(_cardDto, _id) {
         let Cards = LocalStorage.getCards();
-        let card;
-
-        for (let item of Cards) {
-            if (item.id == _id) {
-                card = item;
-                break;
-            }
-        }
+        let card = Cards.find((element) => element.id == _id);
 
         (Cards[Cards.indexOf(card)]).cardCode = _cardDto.cardCode;
         (Cards[Cards.indexOf(card)]).codeInfo = new CodeInfo(_cardDto.cardCode);
@@ -51,7 +38,8 @@ const DiscountCardsHandler = { // handles discount cards creation/manipulation/d
             if (CustomersHandler.permissionToCreateCard(_cardDto.customer)) {
                 CustomersHandler.removeCardFromCustomer(card.customerEmail, card.id); //remove card from old user
                 CustomersHandler.addDiscountCardToCustomer(_cardDto.customer, card.id); // assign it to a new user
-                LocalStorage.setCards(Cards);
+
+                this.updateCardOwner(card.id, _cardDto.customer);
             } else {
                 alert("A customer is not allowed to have more than four discount cards. Update not successful");
             }
@@ -62,35 +50,33 @@ const DiscountCardsHandler = { // handles discount cards creation/manipulation/d
 
     updateCardOwner(_id, _newOwner) {
         let Cards = LocalStorage.getCards();
+        let card = Cards.find((element) => element.id == _id);
 
-        for (let card of Cards) {
-            if (card.id == _id) {
-                (Cards[Cards.indexOf(card)]).customerEmail = _newOwner;
-
-                break;
-            }
-        }
-
+        (Cards[Cards.indexOf(card)]).customerEmail = _newOwner;
         LocalStorage.setCards(Cards);
+
     },
 
     deleteCard(_id) {
         let Cards = LocalStorage.getCards();
+        let card = Cards.find((element) => element.id == _id);
 
-        for (const card of Cards) {
-            if (card.id == _id) {
-                Cards.splice(Cards.indexOf(card), 1);
-                CustomersHandler.removeCardFromCustomer(card.customerEmail, card.id);
-                break;
-            }
-        }
-
+        Cards.splice(Cards.indexOf(card), 1);
+        CustomersHandler.removeCardFromCustomer(card.customerEmail, card.id);
         LocalStorage.setCards(Cards);
     },
 
-    getCardInfo() {
-        // shte se razpisva
-        // basically za izvejdane na info kato vizualizirame karti na customer-i
+    renewCard(_id) { // renews an expired card and gives it an expiration date of 1 year more than it's original expiration date 
+        let card = this.getCard(_id);
+        let newCode = card.cardCode.substring(0, 8) + (parseInt(card.cardCode.substring(8)) + 1).toString();
+
+        this.deleteCard(_id);
+        this.createDiscountCard(new CardDto(card.customerEmail, newCode));
+    },
+
+    getCardInfo(_id) {
+        let card = this.getCard(_id);
+        return `${card.cardCode}: ${card.codeInfo.discount} discount for ${card.codeInfo.category}, valid before ${card.codeInfo.date}`;
     }
 
 };

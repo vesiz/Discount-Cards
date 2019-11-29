@@ -122,22 +122,20 @@ const FilterUIManager = {
 
     filterBySearchInput(_cards, _customers) {
         let filteredCards = [];
-        let currentInput = (CURRENT_FILTER_SETTINGS.searchInput).replace(/^\s+|\s+$|\s+(?=\s)/g, "");
+        let currentInput = (CURRENT_FILTER_SETTINGS.searchInput).replace(/^\s+|\s+$|\s+(?=\s)/g, "").toLowerCase();
 
-        if (currentInput == "") {
-            return _cards;
-        }
+        if (currentInput == "") return _cards;
 
         switch (CURRENT_FILTER_SETTINGS.searchByConstraint) {
             case (ORDER_SEARCH_OPTIONS.name):
                 for (let card of _cards) {
-                    let name = (_customers.find((element) => element.email == card.customerEmail)).name;
+                    let name = ((_customers.find((element) => element.email == card.customerEmail)).name).toLowerCase();
                     if (name.includes(currentInput)) filteredCards.push(card);
                 }
                 break;
             case (ORDER_SEARCH_OPTIONS.city):
                 for (let card of _cards) {
-                    let city = (_customers.find((element) => element.email == card.customerEmail)).city;
+                    let city = ((_customers.find((element) => element.email == card.customerEmail)).city).toLowerCase();
                     if (city.includes(currentInput)) filteredCards.push(card);
                 }
                 break;
@@ -149,8 +147,8 @@ const FilterUIManager = {
                 break;
             default:
                 for (let card of _cards) {
-                    let name = (_customers.find((element) => element.email == card.customerEmail)).name;
-                    let city = (_customers.find((element) => element.email == card.customerEmail)).city;
+                    let name = ((_customers.find((element) => element.email == card.customerEmail)).name).toLowerCase();
+                    let city = ((_customers.find((element) => element.email == card.customerEmail)).city).toLowerCase();
                     let cardNumber = card.cardCode;
 
                     if (name.includes(currentInput) || city.includes(currentInput) || cardNumber.includes(currentInput)) filteredCards.push(card);

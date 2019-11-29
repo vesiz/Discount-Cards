@@ -2,13 +2,14 @@ const MiscUIManager = {
     toggleEntityButtonVisibility(_type, _mode) {
         if (_mode == BUTTONS_VISIBILITY.create) {
             document.getElementById(`${_type}-submit`).style.display = "inline";
-            document.getElementById(`${_type}-reset`).style.display = "inline";
             document.getElementById(`${_type}-update`).style.display = "none";
+            document.getElementById(`${_type}-reset`).value = "Reset";
 
         } else if (_mode == BUTTONS_VISIBILITY.update) {
             document.getElementById(`${_type}-submit`).style.display = "none";
-            document.getElementById(`${_type}-reset`).style.display = "none";
             document.getElementById(`${_type}-update`).style.display = "inline";
+            document.getElementById(`${_type}-reset`).value = "Cancel";
+
         }
     },
 

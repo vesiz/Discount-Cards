@@ -1,4 +1,3 @@
-//may be eventually deleted
 const DISCOUNT_TYPE = {
     0: "",
     1: "Cosmetics",
@@ -31,23 +30,6 @@ const BUTTONS_VISIBILITY = {
     update: "update"
 };
 
-const FIELDS = {
-
-};
-
-/*
-
-let cardDto = {
-    customer,
-    cardCode
-};
-
-let customerDto = {
-    name,
-    email,
-    city
-};
-*/
 
 //MIN AND MAX VALUES FOR DATE
 //VALUES FOR ID AND CLASS NAMES FOR DIVS
