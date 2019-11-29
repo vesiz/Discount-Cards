@@ -1,4 +1,4 @@
-//nop use; may be deleted
+//no use; may be deleted
 const FILTER_SETTINGS_KEY = "filterSettings";
 
 const SessionStorage = {
