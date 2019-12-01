@@ -43,6 +43,6 @@ const MiscUIManager = {
 
         setTimeout(() => {
             document.getElementById("info-message").setAttribute("class", "hidden");
-        }, 2000);
+        }, 2500);
     }
 };

@@ -9,14 +9,15 @@ const CustomerUIManager = {
         let city = (document.getElementById("city")).value;
 
         if (name == "" || email == "" || city == "") {
-            alert("Please fill all of the fields.");
+            MiscUIManager.showInfoMessage("Please fill all of the fields.");
             return;
         }
 
         if (!CustomersHandler.createCustomer(new CustomerDto(name, email, city))) {
-            alert("A customer with this email already exists. Please provide another email address.");
+            MiscUIManager.showInfoMessage("A customer with this email already exists. Please provide another email address.");
+
         } else {
-            //alert("Customer successfully created.");
+            MiscUIManager.showInfoMessage("Customer successfully created.");
             this.resetForm();
         }
 
@@ -96,7 +97,8 @@ const CustomerUIManager = {
     },
 
     deleteCustomer(_email) {
-        CustomersHandler.deleteCustomer(_email);
+        //CustomersHandler.deleteCustomer(_email);
+        MiscUIManager.showInfoMessage(`Customer ${CustomersHandler.deleteCustomer(_email)} successfully deleted.`);
         this.displayAllCustomers();
         DiscountCardUIManager.prepareForm();
         DiscountCardUIManager.displayAllCards();
@@ -109,8 +111,10 @@ const CustomerUIManager = {
         let city = document.getElementById("city").value;
 
         if (!CustomersHandler.updateCustomer(new CustomerDto(name, email, city), _email)) {
-            alert("You cannot give this user an email that is already assigned to another user. Please enter another email.");
+            MiscUIManager.showInfoMessage("You cannot give this user an email that is already assigned to another user. Please enter another email.");
             return;
+        } else {
+            MiscUIManager.showInfoMessage(`Customer ${name} successfully updated.`);
         }
 
         MiscUIManager.toggleEntityButtonVisibility("customer", BUTTONS_VISIBILITY.create);

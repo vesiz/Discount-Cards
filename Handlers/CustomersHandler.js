@@ -36,11 +36,12 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
         }
 
         LocalStorage.setCustomers(Customers);
+        return customer.name;
     },
 
     updateCustomer(_customerDto, _email) {
         let Customers = LocalStorage.getCustomers();
-        let currentCustomer =  Customers.find(item => item.email == _email);
+        let currentCustomer = Customers.find(item => item.email == _email);
 
         //cannot assign new email to user when there's already another user with the same email 
         for (const customer of Customers) {

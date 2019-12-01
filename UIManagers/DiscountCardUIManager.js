@@ -28,14 +28,16 @@ const DiscountCardUIManager = {
         let date = (document.getElementById("date")).value;
 
         if ((new Date()) > (new Date(date))) {
-            alert("Expiration date cannot be a past or present date. Card not created.");
+            MiscUIManager.showInfoMessage("Expiration date cannot be a past or present date. Card not created.");
             return;
         }
 
         let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
 
         if (!DiscountCardsHandler.createDiscountCard(new CardDto(customer, cardCode))) {
-            alert("This customer has the maximum number of discount cards and therefore cannot have a new one. Card not created.");
+            MiscUIManager.showInfoMessage(`Customer ${customer} has the maximum number of discount cards and therefore cannot have a new one. Card not created.`);
+        } else {
+            MiscUIManager.showInfoMessage(`Card for ${customer} successfully created.`);
         }
 
         CustomerUIManager.displayAllCustomers();
@@ -133,13 +135,19 @@ const DiscountCardUIManager = {
         let date = (document.getElementById("date")).value;
 
         if ((new Date()) > (new Date(date))) {
-            alert("Expiration date cannot be a past or present date. Card not created.");
+            MiscUIManager.showInfoMessage("Expiration date cannot be a past or present date. Card not created.");
             return;
         }
 
         let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
 
-        DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id);
+        if (!DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id)) {
+            MiscUIManager.showInfoMessage("A customer is not allowed to have more than four discount cards. Update not successful.");
+        } else {
+            MiscUIManager.showInfoMessage("Card successfully updated.");
+        }
+
+        // DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id);
         this.resetForm();
         this.displayAllCards();
         CustomerUIManager.displayAllCustomers();
@@ -151,6 +159,7 @@ const DiscountCardUIManager = {
         DiscountCardsHandler.deleteCard(_id);
         this.displayAllCards();
         CustomerUIManager.displayAllCustomers();
+        MiscUIManager.showInfoMessage("Card successfully deleted.");
     },
 
     extendExpirationDate(_id) { // extends the expiration date of the card by a year
@@ -159,8 +168,10 @@ const DiscountCardUIManager = {
         let newYear = (parseInt((card.cardCode).slice(8)) + 1).toString();
         let newCode = (card.cardCode).slice(0, 8) + newYear;
 
-        if (!confirm("Do you want to renew your card for one year?") || newYear > 99) {
+        if (!confirm("Do you want to extend the validity of your card with one year?") || newYear > 99) {
             return;
+        } else {
+            MiscUIManager.showInfoMessage("Card expiration date extended with one year.");
         }
 
         DiscountCardsHandler.updateCard(new CardDto(card.customerEmail, newCode), _id);
@@ -178,8 +189,10 @@ const DiscountCardUIManager = {
             if ((new Date(card.codeInfo.date)) < (new Date())) {
                 if (confirm(`Card ${card.id} is expired. If you do not renew it it's going to be deleted. Would you like to renew it?`)) {
                     DiscountCardsHandler.renewCard(card.id);
+                    MiscUIManager.showInfoMessage(`Card ${card.id} is renewd with a expiration date one year from now.`);
                 } else {
                     DiscountCardsHandler.deleteCard(card.id);
+                    MiscUIManager.showInfoMessage(`Card ${card.id} is deleted.`);
                 }
 
                 DiscountCardUIManager.displayAllCards();
@@ -190,6 +203,8 @@ const DiscountCardUIManager = {
 
                     DiscountCardUIManager.displayAllCards();
                     CustomerUIManager.displayAllCustomers();
+
+                    MiscUIManager.showInfoMessage(`Card ${card.id} is renewd with a expiration date one year from now.`);
                 }
             }
         }

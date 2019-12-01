@@ -41,11 +41,13 @@ const DiscountCardsHandler = { // handles discount cards creation/manipulation/d
 
                 this.updateCardOwner(card.id, _cardDto.customer);
             } else {
-                alert("A customer is not allowed to have more than four discount cards. Update not successful");
+                // alert("A customer is not allowed to have more than four discount cards. Update not successful"); 
+                return false;
             }
         } else {
             LocalStorage.setCards(Cards);
         }
+        return true;
     },
 
     updateCardOwner(_id, _newOwner) {
