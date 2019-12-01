@@ -76,7 +76,7 @@ const DiscountCardsHandler = { // handles discount cards creation/manipulation/d
 
     getCardInfo(_id) {
         let card = this.getCard(_id);
-        return `${card.cardCode}: ${card.codeInfo.discount} discount for ${card.codeInfo.category}, valid before ${card.codeInfo.date}`;
+        return `<b>${card.cardCode}</b>: ${card.codeInfo.discount} discount for ${card.codeInfo.category}, valid before ${card.codeInfo.date}`;
     }
 
 };

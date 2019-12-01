@@ -48,8 +48,8 @@ const DiscountCardUIManager = {
         (document.getElementById("category")).firstElementChild.selected = true;
         (document.getElementById("accumulation")).checked = false;
         (document.getElementById("discount")).firstElementChild.selected = true;
-        let currentDate = new Date();
-        (document.getElementById("date")).value = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+
+        MiscUIManager.setFilterDateRange("date");
     },
 
     displayAllCards() {
@@ -63,7 +63,6 @@ const DiscountCardUIManager = {
 
         for (let card of _cardsArray) {
             let customer = CustomersHandler.getCustomer(card.customerEmail);
-            //console.log(card.customerEmail);
             let currentContainer = document.createElement("div");
             currentContainer.setAttribute("class", "card-wrapper");
 
@@ -208,6 +207,8 @@ cardUpdateBtn.addEventListener("click", (e) => {
     DiscountCardUIManager.updateCard(cardUpdateBtn.name);
 });
 
-cardResetBtn.addEventListener("click", () => {
+cardResetBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     MiscUIManager.toggleEntityButtonVisibility("card", BUTTONS_VISIBILITY.create);
+    DiscountCardUIManager.resetForm();
 });

@@ -90,6 +90,7 @@ const CustomerUIManager = {
             addCardBtn.addEventListener("click", (e) => {
                 let email = (addCardBtn.parentElement).id;
                 this.addCardToCustomer(email);
+                MiscUIManager.setView(VIEW_MODE.cards);
             });
         }
     },
@@ -104,7 +105,7 @@ const CustomerUIManager = {
     updateCustomer(_email) {
 
         let name = document.getElementById("name").value;
-        let email =  document.getElementById("email").value;
+        let email = document.getElementById("email").value;
         let city = document.getElementById("city").value;
 
         if (!CustomersHandler.updateCustomer(new CustomerDto(name, email, city), _email)) {

@@ -1,23 +1,29 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Quicksand', sans-serif;
 }
 
 #info-message {
     margin: auto;
-    width: 100px;
-    height: 100px;
+    min-width: 250px;
+    min-height: 100px;
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
     z-index: 1000;
     background-color: #EDE2DF;
     /* display: none; */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    left: 40%;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
 }
 
 .visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity 300ms linear;
+    transition: opacity 200ms linear;
 }
 
 .hidden {
@@ -25,3 +31,238 @@
     opacity: 0;
     transition: visibility 0s 1s, opacity 1s linear;
 }
+
+button,
+.buttons>input {
+    min-width: 170px;
+    min-height: 25px;
+    outline: none;
+}
+
+#customers-view,
+#cards-view {
+    overflow: hidden;
+    margin: auto;
+    max-width: 90%;
+    z-index: 2;
+    margin-top: -20px;
+    background-color: #29648a;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 15px;
+    padding-top: 10px;
+}
+
+#customer-form {
+    position: relative;
+    float: left;
+    width: 45%;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #caccdd;
+    margin: 15px;
+    flex: 1;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+#customers-info {
+    position: relative;
+    float: right;
+    width: 45%;
+    /* background-color: #aaabb8; */
+    background-color: #caccdd;
+    margin: 15px;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex: 1;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+#manage-buttons {
+    width: 100%;
+    margin: auto;
+    padding-bottom: 40px;
+    padding-top: 20px;
+    text-align: center;
+    background-color: #25274D;
+}
+
+#manage-customers,
+#manage-cards {
+    background-color: #29648a;
+    color: #caccdd;
+    border: none;
+    border-radius: 20px;
+    min-height: 40px;
+    min-width: 200px;
+    font-size: 20px;
+    font-weight: 700;
+    outline: none;
+    transition: background-color 1s;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+#manage-customers:hover,
+#manage-cards:hover {
+    background-color: #caccdd;
+    color: #29648a;
+}
+
+#name,
+#email,
+#city,
+#customer,
+#category,
+#discount,
+#date,
+#order-by-options,
+#filter-category,
+#filter-discount,
+#filter-date,
+#search-input>input {
+    width: 100%;
+    min-height: 25px;
+    margin-bottom: 7px;
+    border: none;
+    border-bottom: 1.5px black solid;
+    background-color: #caccdd;
+}
+
+.row,
+.buttons,
+h2 {
+    padding-bottom: 10px;
+    margin: auto;
+    width: 90%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+input,
+select,
+option {
+    outline: none;
+}
+
+#customer-submit,
+#customer-update,
+#customer-reset,
+.customer-edit,
+.customer-delete,
+.customer-add-card,
+.card-edit,
+.card-delete,
+.card-set-expiration-date,
+#card-submit,
+#card-update,
+#card-reset,
+#filter-reset {
+    border: none;
+    background-color: #29648a;
+    color: #caccdd;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.customer-edit,
+.customer-delete,
+.customer-add-card,
+.card-edit,
+.card-delete,
+.card-set-expiration-date {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#customer-submit:active,
+#customer-update:active,
+#customer-reset:active,
+.customer-edit:active,
+.customer-delete:active,
+.customer-add-card:active,
+.card-edit:active,
+.card-delete:active,
+.card-set-expiration-date:active,
+#card-submit:active,
+#card-update:active,
+#card-reset:active,
+#filter-reset:active {
+    background-color: #caccdd;
+    color: #29648a;
+}
+
+.customer-wrapper,
+.card-wrapper {
+    margin: auto;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+ul>li {
+    padding-left: 15px;
+    padding-bottom: 7px;
+}
+
+.customer-buttons-wrapper {
+    padding: 10px;
+}
+
+#card-form,
+#filter-fields,
+#card-info {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #caccdd;
+    margin: 15px;
+    flex: 1;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+#card-form-and-filter,
+#card-info {
+    position: relative;
+    width: 45%;
+    flex: 1;
+
+
+}
+
+#card-form-and-filter {
+    float: left;
+}
+
+#card-info {
+    float: right;
+}
+
+#card-form>form>.row>.subrow,
+.row>p {
+    padding-bottom: 5px;
+}
+
+.card-set-expiration-date,
+#filter-reset {
+    min-width: 200px !important;
+}
+
+.card-wrapper>h4,
+.card-wrapper>p {
+    padding-bottom: 10px;
+}
+
+/* #card-info {
+    overflow: scroll;
+} */

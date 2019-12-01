@@ -18,30 +18,30 @@ const MiscUIManager = {
     setFilterDateRange(_datepicker) {
         let currentDate = new Date();
         let datepicker = document.getElementById(_datepicker);
-        datepicker.min = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+        let date = currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : currentDate.getDate();
+        datepicker.min = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${date}`;
         datepicker.max = "2099-12-31";
-        datepicker.value = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+        datepicker.value = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${date}`;
     },
 
     setView(_mode) {
         switch (_mode) {
             case ("customers"):
-                (document.getElementById("customers-view")).style.display = "block";
+                (document.getElementById("customers-view")).style.display = "flex";
                 (document.getElementById("cards-view")).style.display = "none";
                 break;
             case ("cards"):
                 (document.getElementById("customers-view")).style.display = "none";
-                (document.getElementById("cards-view")).style.display = "block";
+                (document.getElementById("cards-view")).style.display = "flex";
                 break;
         }
-    }, 
+    },
 
-    showInfoMessage(_message){
-        // /document.getElementById("info-message").style.display = "block";
+    showInfoMessage(_message) {
         document.getElementById("info-message").setAttribute("class", "visible");
+        document.getElementById("info-message").innerText = _message;
 
         setTimeout(() => {
-            //document.getElementById("info-message").style.display = "none";
             document.getElementById("info-message").setAttribute("class", "hidden");
         }, 2000);
     }
