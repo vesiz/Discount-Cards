@@ -1,4 +1,3 @@
-//under construction; may be deleted eventually
 class CodeInfo {
     constructor(_code) {
         this.decode(_code);

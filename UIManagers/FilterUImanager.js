@@ -102,7 +102,8 @@ const FilterUIManager = {
     filterByExpirationDate(_cards) {
 
         if ((new Date(document.getElementById("filter-date").value)) < (new Date())) {
-            alert("you cannot filter through past dates duh");
+            MiscUIManager.showInfoMessage("You cannot filter through past dates. Expiration date set to today's date.");
+            MiscUIManager.setFilterDateRange("filter-date");
             return _cards;
         }
 

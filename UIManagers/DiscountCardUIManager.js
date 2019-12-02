@@ -147,7 +147,6 @@ const DiscountCardUIManager = {
             MiscUIManager.showInfoMessage("Card successfully updated.");
         }
 
-        // DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id);
         this.resetForm();
         this.displayAllCards();
         CustomerUIManager.displayAllCustomers();
@@ -178,8 +177,6 @@ const DiscountCardUIManager = {
         this.displayAllCards();
     },
 
-    //if you want to test it first create an expired card with the command below from the browser console
-    //DiscountCardsHandler.createDiscountCard({customer: "replace this with an existing customer", cardCode: "3020140519"});
     renewCards() {
         let Cards = DiscountCardsHandler.getAllDiscountCards();
         let warningDate = new Date();
@@ -204,7 +201,7 @@ const DiscountCardUIManager = {
                     DiscountCardUIManager.displayAllCards();
                     CustomerUIManager.displayAllCustomers();
 
-                    MiscUIManager.showInfoMessage(`Card ${card.id} is renewd with a expiration date one year from now.`);
+                    MiscUIManager.showInfoMessage(`Card ${card.id} is renewed with an expiration date one year from now.`);
                 }
             }
         }

@@ -4,13 +4,11 @@ const CARDS_KEY = "discountCards";
 
 const LocalStorage = {
 
-    // gets an array of objects and parses them to json format 
     setCustomers(_customersArray){
         let customersString = JSON.stringify(_customersArray);
         localStorage.setItem(CUSTOMERS_KEY, customersString);
     },
 
-    //returns an array of js objects 
     getCustomers() {
         if(!localStorage.hasOwnProperty(CUSTOMERS_KEY)){
             return JSON.parse("[]");

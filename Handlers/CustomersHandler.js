@@ -43,7 +43,7 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
         let Customers = LocalStorage.getCustomers();
         let currentCustomer = Customers.find(item => item.email == _email);
 
-        //cannot assign new email to user when there's already another user with the same email 
+        //cannot assign new email to a user when there's already another user with the same email 
         for (const customer of Customers) {
             if (customer.email == _customerDto.email && customer.email != _email) {
                 return false;
@@ -79,7 +79,7 @@ const CustomersHandler = { // handles customer data creation/manipulation/deleti
             }
         }
 
-        return false; //for info message purposes
+        return false;
     },
 
     removeCardFromCustomer(_customerEmail, _cardId) {

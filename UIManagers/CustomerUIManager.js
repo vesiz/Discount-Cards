@@ -13,6 +13,12 @@ const CustomerUIManager = {
             return;
         }
 
+        if(!email.includes("@")){
+            MiscUIManager.showInfoMessage("Please provide a valid email address.");
+            (document.getElementById("email")).value = "";
+            return;
+        }
+
         if (!CustomersHandler.createCustomer(new CustomerDto(name, email, city))) {
             MiscUIManager.showInfoMessage("A customer with this email already exists. Please provide another email address.");
 
