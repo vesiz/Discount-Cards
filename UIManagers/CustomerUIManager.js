@@ -77,6 +77,9 @@ const CustomerUIManager = {
             deleteBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 let email = (deleteBtn.parentElement).id;
+                let customer = CustomersHandler.getCustomer(email);
+
+                if(!confirm(`Are you sure you want to delete customer ${customer.name} and their discount cards?`)) return;
                 this.deleteCustomer(email);
             });
 

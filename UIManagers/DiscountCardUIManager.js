@@ -10,6 +10,8 @@ const DiscountCardUIManager = {
         //selectCustomer.innerHTML = `<option value="" selected disabled hidden></option>`;
 
         for (const customer of customers) {
+
+
             let option = document.createElement("option");
             option.value = customer.email;
             option.innerText = `${customer.name} (${customer.email})`;
@@ -32,7 +34,7 @@ const DiscountCardUIManager = {
             return;
         }
 
-        let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
+        let cardCode = CodeGenerator(category, accumulation, discount, date);
 
         if (!DiscountCardsHandler.createDiscountCard(new CardDto(customer, cardCode))) {
             MiscUIManager.showInfoMessage(`Customer ${customer} has the maximum number of discount cards and therefore cannot have a new one. Card not created.`);
@@ -139,7 +141,7 @@ const DiscountCardUIManager = {
             return;
         }
 
-        let cardCode = (new CodeGenerator(category, accumulation, discount, date)).code;
+        let cardCode =CodeGenerator(category, accumulation, discount, date);
 
         if (!DiscountCardsHandler.updateCard(new CardDto(customer, cardCode), _id)) {
             MiscUIManager.showInfoMessage("A customer is not allowed to have more than four discount cards. Update not successful.");
