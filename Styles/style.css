@@ -35,7 +35,7 @@
 
 button,
 .buttons>input {
-    min-width: 170px;
+    min-width: 100px;
     min-height: 25px;
     outline: none;
 }
@@ -162,7 +162,7 @@ option {
 .customer-add-card,
 .card-edit,
 .card-delete,
-.card-set-expiration-date,
+.card-renew,
 #card-submit,
 #card-update,
 #card-reset,
@@ -179,7 +179,7 @@ option {
 .customer-add-card,
 .card-edit,
 .card-delete,
-.card-set-expiration-date {
+.card-renew {
     margin-right: 5px;
     margin-bottom: 5px;
 }
@@ -192,7 +192,7 @@ option {
 .customer-add-card:active,
 .card-edit:active,
 .card-delete:active,
-.card-set-expiration-date:active,
+.card-renew:active,
 #card-submit:active,
 #card-update:active,
 #card-reset:active,
@@ -255,7 +255,6 @@ ul>li {
     padding-bottom: 5px;
 }
 
-.card-set-expiration-date,
 #filter-reset {
     min-width: 200px !important;
 }

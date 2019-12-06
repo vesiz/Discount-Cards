@@ -1,1 +1,2 @@
-# Discount-Cards
+# Discount Cards (project still under construction)
+

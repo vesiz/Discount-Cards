@@ -5,6 +5,6 @@ window.onload = () => {
     MiscUIManager.setView(VIEW_MODE.cards);
 
     setTimeout(() => {
-        DiscountCardUIManager.renewCards();
+        DiscountCardUIManager.checkCardsForRenewal();
     }, 1000);
 };
