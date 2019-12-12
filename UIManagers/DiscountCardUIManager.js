@@ -142,7 +142,12 @@ const DiscountCardUIManager = {
         let date = (document.getElementById("date")).value;
 
         if ((new Date()) > (new Date(date))) {
-            MiscUIManager.showInfoMessage("Expiration date cannot be a past or present date. Card not created.");
+            MiscUIManager.showInfoMessage("Expiration date cannot be a past or present date. Card not updated.");
+            return;
+        }
+
+        if (date == "" || (new Date(date).getFullYear() > 2099)) {
+            MiscUIManager.showInfoMessage("Please enter a valid expiration date. Card not updated.");
             return;
         }
 
